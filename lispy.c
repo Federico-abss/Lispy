@@ -1431,10 +1431,10 @@ int main(int argc, char** argv){
     puts("Hi, I am Federico and this is my version of Lisp, made especially for you with love");
     puts("Press Ctrl+c or write exit to Exit\n");
 
-    /* initialize the environment and load std */
+    /* initialize the environment and load std library */
     lenv* e = lenv_new();
     lenv_add_builtins(e);
-    lval* standard = lval_add(lval_sexpr(), lval_str("std_library.lspy"));
+    lval* standard = lval_add(lval_sexpr(), lval_str("std-library/std_library.lspy"));
     lval* std = builtin_load(e, standard);
 
     /* if only one argument is provided start a never ending loop */
