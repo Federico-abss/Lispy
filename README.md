@@ -60,6 +60,6 @@ Clone the repository in a folder in your ide using the command `git clone https:
 Cannot express my gratitude enough to Mr Daniel Holden for his incredible work on the "Build Your Own Lisp" book and MPC library, 
 he is the person that made this project possible.  
 
-* Build Your Own Lisp [Book](https://www.amazon.com/Build-Your-Own-Lisp-Programming/dp/1501006622) and [Website](http://www.buildyourownlisp.com/)
-* MPC library [Github Page](https://github.com/orangeduck/mpc)
-* Wikipedia for reference on [Lisp](https://en.wikipedia.org/wiki/Lisp_(programming_language)) and [Clojure](https://en.wikipedia.org/wiki/Clojure)
+* Build Your Own Lisp [Book](https://www.amazon.com/Build-Your-Own-Lisp-Programming/dp/1501006622) and [Website](http://www.buildyourownlisp.com/);
+* MPC library [Github Page](https://github.com/orangeduck/mpc);
+* Wikipedia for reference on [Lisp](https://en.wikipedia.org/wiki/Lisp_(programming_language)) and [Clojure](https://en.wikipedia.org/wiki/Clojure).
