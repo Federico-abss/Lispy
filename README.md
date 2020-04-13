@@ -53,8 +53,8 @@ There are only 5 data type you will generally interact with, **numbers**, **stri
 This software supports all platforms that have a C compiler, the only dependecy is the editline library, on Mac it comes with Command Line Tools, on Linux you can install it `with sudo apt-get install libedit-dev` while on  Fedora you can use the command `su -c "yum install libedit-dev*"`.<br>
 Taken care of that you can compile lispy.c with this command `cc -std=c99 -Wall lispy.c mpc.c -ledit -lm -o lispy`.
 #### Using cs50 ide, step by step 
-Clone the repository in a folder in your ide using the command `git clone https://github.com/Federico-abss/Lispy.git`, <br> after this you need to install one dependency by writing the command `sudo apt-get install libedit-dev` and then compile using `cc -std=c99 -Wall lispy.c mpc.c -ledit -lm -o lispy`. You can now execute the compiled file!
-#### Enjoy using Lispy!
+Clone the repository in a folder in your ide using the command `git clone https://github.com/Federico-abss/Lispy.git`, <br> after this you need to install one dependency by writing the command `sudo apt-get install libedit-dev` and then compile using `cc -std=c99 -Wall lispy.c mpc.c -ledit -lm -o lispy`. You can now execute the compiled file!<br>
+**Enjoy using Lispy!** <br>
 
 ## Credits
 Cannot express my gratitude enough to Mr Daniel Holden for his incredible work on the "Build Your Own Lisp" book and MPC library, 
