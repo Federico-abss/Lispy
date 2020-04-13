@@ -7,8 +7,7 @@ or evaluate any number of external files written in Lispy `./lispy example.lspy`
 ## Installation
 
 ### Using cs50 ide 
-Clone the repository in a folder in your ide using the command `git clone https://github.com/Federico-abss/Lispy.git`, after this you need to install 
-one dependency by writing the command `sudo apt-get install libedit-dev` and then compile using `cc -std=c99 -Wall lispy.c mpc.c -ledit -lm -o lispy`.
+Clone the repository in a folder in your ide using the command `git clone https://github.com/Federico-abss/Lispy.git`, <br> after this you need to install one dependency by writing the command `sudo apt-get install libedit-dev` and then compile using `cc -std=c99 -Wall lispy.c mpc.c -ledit -lm -o lispy`. You can now execute the compiled file!
 #### Enjoy using Lispy!
 
 ## Credits
