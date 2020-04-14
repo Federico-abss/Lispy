@@ -42,8 +42,9 @@ print "Hello World" ;;; this line is not going to be evaluated
 ## Lispy basics
 There are many unusual functionalities in Lispy, people familiar with Lisp or any of its dialects won't have any problem understanding the language, to anyone else it will look a bit foreign, but I will try to make it as clear as possible for anyone.
 ### Lisp Values
-There are only 6 value types you will generally interact with, **numbers**, **strings**, **errors**, **functions**, **S-expressions** and **Q-expressions**. <br>
-**Numbers:** Lispy supports integers and decimal numbers, refer to C "long" and "double" for more informations on upper and lower valid ranges. Note that anything following one or more `;` on the same line is interpreted as a comment and not evaluated.
+There are only 6 value types you will generally interact with, **numbers**, **strings**, **errors**, **functions**, **S-expressions** and **Q-expressions**. 
+#### Numbers
+Lispy supports integers and decimal numbers, refer to C "long" and "double" for more informations on upper and lower valid ranges. Note that anything following one or more `;` on the same line is interpreted as a comment and not evaluated.
 ```
 lispy> / 10 3
 3
@@ -52,7 +53,8 @@ lispy> / 10 3.0
 lispy> 1.0   ;;; decimals are always displayed with 6 numbers after the decimal point
 1.000000
 ``` 
-**Strings:** a string is any combination of zero or more characters contained inside apostrophes.
+#### Strings
+A string is any combination of zero or more characters contained inside apostrophes.
 ```
 lispy> "Hello World!"
 "Hello World!"
@@ -62,7 +64,8 @@ lispy> print "jet fuel cannot melt steel beams"
 "jet fuel cannot melt steel beams" 
 ()
 ``` 
-**Errors:** errors are generated automatically when the users tries to to evaluate invalid code, but it can also be generated using the "error" function followed by a string. Errors are prevesent to prevent invalid memory accesses and help the user by providing useful commentary.
+#### Errors
+Errors are generated automatically when the users tries to to evaluate invalid code, but it can also be generated using the "error" function followed by a string. Errors are prevesent to prevent invalid memory accesses in the interpreter and help the user by providing insightful commentary.
 ```
 lispy> + 1 "2"
 Error: Cannot operate on non-number!
@@ -71,7 +74,8 @@ lispy> + 1 2
 lispy> error "costum error"
 Error: costum error
 ``` 
-**Functions:** here is where we start working with some of Lispy's more interesting and powerful features, firstly a function is a type of value bound to a symbol, that when called with the right arguments is gonna perform some actions or otherwise return an error.
+#### Functions 
+Here is where we start working with some of Lispy's more interesting and powerful features, firstly a function is a type of value bound to a symbol, that when called with the right arguments is gonna perform some actions or otherwise return an error.
 There is no distinction between what other languages consider operators like `+` and functions like `print`, lispy interprets them both as symbols, and if they are bound to any function value the function gets called.
 ```
 lispy> - 1 2  ;;; "-" is the symbol for the subtraction function
@@ -97,7 +101,8 @@ lispy> +
 lispy> addition
 (\ {x y} {+ x y})
 ``` 
-
+As you can see above writing the symbol associated to a function will show if the function is builtin, or if it's a lambda, it's formulation. 
+The standard library is a collection of custom functions written in Lispy that gets automatically loaded when you run the Lispy interface, you can find its documentation as well as explanation on how to write custom functions [here](link).
 
 **S-expressions:**
 **Q-expression:**.
