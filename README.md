@@ -65,7 +65,7 @@ lispy> print "jet fuel cannot melt steel beams"
 ()
 ``` 
 #### Errors
-Errors are generated automatically when the users tries to to evaluate invalid code, but it can also be generated using the "error" function followed by a string. Errors are prevesent to prevent invalid memory accesses in the interpreter and help the user by providing insightful commentary.
+Errors are generated automatically when the users tries to to evaluate invalid code, but it can also be generated using the "error" function followed by a string. Errors are used to prevent invalid memory accesses in the interpreter and help the user by providing insightful commentary.
 ```
 lispy> + 1 "2"
 Error: Cannot operate on non-number!
@@ -93,7 +93,7 @@ lispy> * 2 (+ 3 4)
 lispy> (\ {x y} {* 2 (+ x y)}) 3 4
 14
 ``` 
-There are two different types of functions in Lispy, builtin and costum functions, builtins are functions written in C that perform an operation in Lispy, while costums are lamdba functions bound to a symbol.
+There are two different types of functions in Lispy, builtin and custom functions, builtins are functions written in C that perform an operation in Lispy, while customs are lambda functions bound to a symbol.
 Refer [here](link) for documentation on builtin functions
 ```
 lispy> + 3 4
@@ -123,8 +123,8 @@ lispy> + 5 (* 3 3)
 14 
 ``` 
 #### Q-expressions
-Q-expressions are a collection of lvalues that are not meant to be evaluated by the interpreter, they can be used as an equivalent of Python lists or C arrays, but also converted using functions, to a sexpr with `eval` and back to a qexpr with `list`.
-Note that qexprs can also contain functions, this will allow us to write [code that modifies itself](link) further on.
+Q-expressions are a collection of lvalues that are not meant to be evaluated by the interpreter, you can creat one by wrapping an expression inside curly braces and they can be used as an equivalent of Python lists or C arrays to store data, but also be manipulated with various functions that accept them as their argument, `eval` for example converts a qexpr into a sexpr.
+Note that qexprs can contain anything, functions included, this will allow us to write [code that modifies itself](link) further on.
 ```
 lispy> {+ 1 2 3}
 {+ 1 2 3}
@@ -143,7 +143,51 @@ lispy> env
 {def = env \ fun exit load error print list head tail eval join cons len init index pack unpack 
 > < >= <= == != if and or not + - * / % max min ^}
 ``` 
-Environments don't only contain functions, you can associate any lvalue to a symbol and save them for use, just remember the environment is deleted every time you interrupt the execution of the interpreter. To create your costum lvalues use the `=`
+Environments don't only contain functions, you can associate any lvalue to a symbol and save them for future use like a variable, just remember the environment is deleted every time you interrupt the execution of the interpreter. To create a variable in the global scope use the `=` followed by a symbol in curly brackets and the lvalue you want to bind.
+```
+lispy> = {x} 10
+()
+lispy> print x
+10 
+()
+lispy> + x 5
+15
+``` 
+You can create a local environment for your variables using the `let` function, but you also automatically create a local scope every time you use a custom function, this allows the interpreter to not pollute the global scope every time it evaluates a function.
+### Symbols 
+We already spoke at length about symbols in lispy, but I have never given a formal definition, the parser recognizes every letter on an international keyboard and the most popular symbols, you can use them in any combination to create a symbol.
+Before assigning a lvalue to it, any symbol is in an "unbound" state, after it gets assigned it will act as a variable by holding the lvalue.
+```
+lispy> x
+Error: Unbound Symbol 'x'
+lispy> = {x} 10
+()
+lispy> x
+10
+``` 
+When you create a variable this is way it is saved inside the global environment, you can find it using `env` at the end of the list of functions. Pay attention when creating a variable, if you choose a symbol already in use you are going to override whatever lvalue was previously stored in it.
+```
+lispy> head
+<builtin>
+lispy> = {head} 5
+()
+lispy> head
+5
+``` 
+Expanding on this, variables in lispy are immutable, there is no way of modifying them, and even when you assign a new lvalue to the same symbol to update a variable, in the background the interpreter is just destroying the variable and creating a new one associated to the same symbol.
+The same happens with symbols bound to qexprs, even though quexprs are often used like lists they are more similar to sets when bound to a symbol, as they cannot be modified after being stored in a variable.
+```
+lispy> = {x} {1 2 3}
+()
+lispy> head x
+{1}
+lispy> x  
+{1 2 3}   ;;; "head" didn't actually remove the first value as expected
+lispy> = {x} (tail x)
+()   ;;; we need to rebind the symbol and use a different function to perform the intended operation
+lispy> x
+{2 3}
+``` 
 
 # Installation
 This software supports all platforms that have a C compiler, the only dependecy you need is the editline library, on Mac it comes with Command Line Tools, on Linux you can install it `with sudo apt-get install libedit-dev` while on Fedora you can use the command `su -c "yum install libedit-dev*"`.<br>
@@ -153,8 +197,7 @@ Clone the repository in a folder in your ide using the command `git clone https:
 **Enjoy using Lispy!** <br>
 
 # Credits
-Cannot express my gratitude enough to Mr Daniel Holden for his incredible work on the "Build Your Own Lisp" book and MPC library, 
-he is the person that made this project possible.  
+Cannot express my gratitude enough to Mr Daniel Holden for his incredible work on the "Build Your Own Lisp" book and MPC library I used for parsing, he is the person that made this project possible.  
 
 * Build Your Own Lisp [Book](https://www.amazon.com/Build-Your-Own-Lisp-Programming/dp/1501006622) and [Website](http://www.buildyourownlisp.com/);
 * MPC library [Github Page](https://github.com/orangeduck/mpc);
