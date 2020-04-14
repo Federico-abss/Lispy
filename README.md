@@ -42,7 +42,7 @@ print "Hello World" ;;; this line is not going to be evaluated
 ## Lispy basics
 There are many unusual functionalities in Lispy, people familiar with Lisp or any of its dialects won't have any problem understanding the language, to anyone else it will look a bit foreign, but I will try to make it as clear as possible for anyone.
 ### Lisp Values
-There are only 6 value types you will generally interact with, **numbers**, **strings**, **errors**, **functions**, **S-expressions** and **Q-expressions**. 
+There are only 6 value types you will generally interact with, **numbers**, **strings**, **errors**, **functions**, **S-expressions** and **Q-expressions**.
 #### Numbers
 Lispy supports integers and decimal numbers, refer to C "long" and "double" for more informations on upper and lower valid ranges. Note that anything following one or more `;` on the same line is interpreted as a comment and not evaluated.
 ```
@@ -75,13 +75,16 @@ lispy> error "costum error"
 Error: costum error
 ``` 
 #### Functions 
-Here is where we start working with some of Lispy's more interesting and powerful features, firstly a function is a type of value bound to a symbol, that when called with the right arguments is gonna perform some actions or otherwise return an error.
+Here is where we start working with some of Lispy's more interesting and powerful features, firstly a function is a type of value bound to a symbol, that when called with the right arguments is gonna perform some actions or otherwise return an error. <br>
+To call a function just write its symbol followed by the intended arguments, just note that every function support different values as arguments and while some can accepts any number of arguments other can only accept a defined amount. <br>
 There is no distinction between what other languages consider operators like `+` and functions like `print`, lispy interprets them both as symbols, and if they are bound to any function value the function gets called.
 ```
 lispy> - 1 2  ;;; "-" is the symbol for the subtraction function
 -1
-lispy> head "string" ;;; "head" is associated to a function that return the first element of a string
+lispy> head "string"  ;;; "head" is associated to a function that return the first element of a string
 "s"
+lispy> head "string1" "string2"  ;;; "head" supports only one argument
+Error: Function 'head' passed incorrect number of arguments. Got 2, Expected 1.
 ``` 
 I said that functions are bound to a symbol, but you can actually create custom one use functions called lambdas using the `\` symbol. The syntax of the example ahead will probably be confusing but it will hopefully make sense after reading the next sections.
 ```
@@ -91,6 +94,7 @@ lispy> (\ {x y} {* 2 (+ x y)}) 3 4
 14
 ``` 
 There are two different types of functions in Lispy, builtin and costum functions, builtins are functions written in C that perform an operation in Lispy, while costums are lamdba functions bound to a symbol.
+Refer [here](link) for documentation on builtin functions
 ```
 lispy> + 3 4
 7
@@ -101,15 +105,39 @@ lispy> +
 lispy> addition
 (\ {x y} {+ x y})
 ``` 
-As you can see above writing the symbol associated to a function will show if the function is builtin, or if it's a lambda, it's formulation. 
-The standard library is a collection of custom functions written in Lispy that gets automatically loaded when you run the Lispy interface, you can find its documentation as well as explanation on how to write custom functions [here](link).
-
-**S-expressions:**
-**Q-expression:**.
-<br> 
+As you can see above writing the symbol associated to a function will show if the function is builtin, or if it's a lambda, its formulation. 
+The standard library is a collection of custom functions written in Lispy that gets automatically loaded when you run the Lispy interface, you can find its documentation as well as the explanation on how to write custom functions [here](https://github.com/Federico-abss/Lispy/tree/master/std-library).
+#### S-expressions
+S-expressions are lines of code marked as "to be evaluated" from the interpreter, in the interface every piece of code is an sexpr by default, but if you are working with an external file you will need to wrap every expression in parenthesis to make them sexprs.
+Nesting sexprs is also importanto to comunicate the proper order of evalution for your code, remember that the interpreter starts always from the most internal sexprs.
+```
+lispy> print + 5 4
+<builtin> 5 4  ;;; unintended behaviour
+()
+lispy> print (+ 5 4)
+9 
+()
+lispy> + 5 * 3 3 
+Error: Cannot operate on non-number!   ;;; unintended behaviour
+lispy> + 5 (* 3 3)
+14 
+``` 
+#### Q-expressions
+Q-expressions are a collection of lvalues that are not meant to be evaluated by the interpreter, they can be used as an equivalent of Python lists or C arrays, but also converted using functions, to a sexpr with `eval` and back to a qexpr with `list`.
+Note that qexprs can also contain functions, this will allow us to write [code that modifies itself](link) further on.
+```
+lispy> {+ 1 2 3}
+{+ 1 2 3}
+lispy> eval {+ 1 2 3}
+6
+lispy> head + 1 2 3  ;;; example of a function that works on qexprs
+Error: Function 'head' passed incorrect number of arguments. Got 4, Expected 1.
+lispy> head {+ 1 2 3}
+{+}
+``` 
 ## Installation
-This software supports all platforms that have a C compiler, the only dependecy is the editline library, on Mac it comes with Command Line Tools, on Linux you can install it `with sudo apt-get install libedit-dev` while on  Fedora you can use the command `su -c "yum install libedit-dev*"`.<br>
-Taken care of that you can compile lispy.c with this command `cc -std=c99 -Wall lispy.c mpc.c -ledit -lm -o lispy`.
+This software supports all platforms that have a C compiler, the only dependecy you need is the editline library, on Mac it comes with Command Line Tools, on Linux you can install it `with sudo apt-get install libedit-dev` while on Fedora you can use the command `su -c "yum install libedit-dev*"`.<br>
+Taken care of that you can compile lispy.c with this command: `cc -std=c99 -Wall lispy.c mpc.c -ledit -lm -o lispy`.
 #### Using cs50 ide, step by step 
 Clone the repository in a folder in your ide using the command `git clone https://github.com/Federico-abss/Lispy.git`, <br> after this you need to install one dependency by writing the command `sudo apt-get install libedit-dev` and then compile using `cc -std=c99 -Wall lispy.c mpc.c -ledit -lm -o lispy`. You can now execute the compiled file!<br>
 **Enjoy using Lispy!** <br>
