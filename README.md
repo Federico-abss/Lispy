@@ -40,14 +40,67 @@ print "Hello World" ;;; this line is not going to be evaluated
 ```
 
 ## Lispy basics
-There is a lot to say about Lispy, people familiar with Lisp or any of its dialect won't have any problem understanding the language, but to anyone else it may look a bit foreign, but I will try to make it as clear as possible for anyone.
-### Data types
-There are only 5 data type you will generally interact with, **numbers**, **strings**, **functions**, **S-expressions** and **Q-expression**. <br>
-**Numbers:** Lispy supports integers and decimal numbers, they behave similarly  
-**Strings**
-**Functions**
-**S-expressions**
-**Q-expression**.
+There are many unusual functionalities in Lispy, people familiar with Lisp or any of its dialects won't have any problem understanding the language, to anyone else it will look a bit foreign, but I will try to make it as clear as possible for anyone.
+### Lisp Values
+There are only 6 value types you will generally interact with, **numbers**, **strings**, **errors**, **functions**, **S-expressions** and **Q-expressions**. <br>
+**Numbers:** Lispy supports integers and decimal numbers, refer to C "long" and "double" for more informations on upper and lower valid ranges. Note that anything following one or more `;` on the same line is interpreted as a comment and not evaluated.
+```
+lispy> / 10 3
+3
+lispy> / 10 3.0 
+3.333333  
+lispy> 1.0   ;;; decimals are always displayed with 6 numbers after the decimal point
+1.000000
+``` 
+**Strings:** a string is any combination of zero or more characters contained inside apostrophes.
+```
+lispy> "Hello World!"
+"Hello World!"
+lispy> join "Hi " "Federico"
+"Hi Federico"
+lispy> print "jet fuel cannot melt steel beams"
+"jet fuel cannot melt steel beams" 
+()
+``` 
+**Errors:** errors are generated automatically when the users tries to to evaluate invalid code, but it can also be generated using the "error" function followed by a string. Errors are prevesent to prevent invalid memory accesses and help the user by providing useful commentary.
+```
+lispy> + 1 "2"
+Error: Cannot operate on non-number!
+lispy> + 1 2
+3
+lispy> error "costum error"
+Error: costum error
+``` 
+**Functions:** here is where we start working with some of Lispy's more interesting and powerful features, firstly a function is a type of value bound to a symbol, that when called with the right arguments is gonna perform some actions or otherwise return an error.
+There is no distinction between what other languages consider operators like `+` and functions like `print`, lispy interprets them both as symbols, and if they are bound to any function value the function gets called.
+```
+lispy> - 1 2  ;;; "-" is the symbol for the subtraction function
+-1
+lispy> head "string" ;;; "head" is associated to a function that return the first element of a string
+"s"
+``` 
+I said that functions are bound to a symbol, but you can actually create custom one use functions called lambdas using the `\` symbol. The syntax of the example ahead will probably be confusing but it will hopefully make sense after reading the next sections.
+```
+lispy> * 2 (+ 3 4)
+14
+lispy> (\ {x y} {* 2 (+ x y)}) 3 4
+14
+``` 
+There are two different types of functions in Lispy, builtin and costum functions, builtins are functions written in C that perform an operation in Lispy, while costums are lamdba functions bound to a symbol.
+```
+lispy> + 3 4
+7
+lispy> addition 3 4
+7
+lispy> +
+<builtin>
+lispy> addition
+(\ {x y} {+ x y})
+``` 
+
+
+**S-expressions:**
+**Q-expression:**.
 <br> 
 ## Installation
 This software supports all platforms that have a C compiler, the only dependecy is the editline library, on Mac it comes with Command Line Tools, on Linux you can install it `with sudo apt-get install libedit-dev` while on  Fedora you can use the command `su -c "yum install libedit-dev*"`.<br>
