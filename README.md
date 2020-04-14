@@ -42,7 +42,7 @@ print "Hello World" ;;; this line is not going to be evaluated
 # Lispy basics
 There are many unusual functionalities in Lispy, people familiar with Lisp or any of its dialects won't have any problem understanding the language, to anyone else it will look a bit foreign, but I will try to make it as clear as possible for anyone.
 ### Lisp Values
-There are only 6 value types you will generally interact with, **numbers**, **strings**, **errors**, **functions**, **S-expressions** and **Q-expressions**.
+There are 7 value types or lvalues you will generally interact with, **numbers**, **strings**, **errors**, **functions**, **S-expressions**, **Q-expressions** and **environments**.
 #### Numbers
 Lispy supports integers and decimal numbers, refer to C "long" and "double" for more informations on upper and lower valid ranges. Note that anything following one or more `;` on the same line is interpreted as a comment and not evaluated.
 ```
@@ -135,11 +135,21 @@ Error: Function 'head' passed incorrect number of arguments. Got 4, Expected 1.
 lispy> head {+ 1 2 3}
 {+}
 ``` 
+#### Environments
+Until now I have referred several times to symbols being bound to a function or other lvalues, but what does it mean in concrete? You see there is an environment which is basically a global scope that contains every symbol necessary for working with Lispy. <br>
+The first thing the Lispy interpreter does when executed is creating a global environment and loading every builtin function and its symbols in it, you can see them by using the function `env`.
+```
+lispy> env
+{def = env \ fun exit load error print list head tail eval join cons len init index pack unpack 
+> < >= <= == != if and or not + - * / % max min ^}
+``` 
+Environments don't only contain functions, you can associate any lvalue to a symbol and save them for use, just remember the environment is deleted every time you interrupt the execution of the interpreter. To create your costum lvalues use the `=`
+
 # Installation
 This software supports all platforms that have a C compiler, the only dependecy you need is the editline library, on Mac it comes with Command Line Tools, on Linux you can install it `with sudo apt-get install libedit-dev` while on Fedora you can use the command `su -c "yum install libedit-dev*"`.<br>
-Taken care of that you can compile lispy.c with this command: `cc -std=c99 -Wall lispy.c mpc.c -ledit -lm -o lispy`.
+Taken care of that you can compile the interpreter file with this command: `cc -std=c99 -Wall lispy.c mpc.c -ledit -lm -o lispy`.
 #### Using cs50 ide, step by step 
-Clone the repository in a folder in your ide using the command `git clone https://github.com/Federico-abss/Lispy.git`, <br> after this you need to install one dependency by writing the command `sudo apt-get install libedit-dev` and then compile using `cc -std=c99 -Wall lispy.c mpc.c -ledit -lm -o lispy`. You can now execute the compiled file!<br>
+Clone the repository in a folder in your ide using the command `git clone https://github.com/Federico-abss/Lispy.git`, <br> after this you need to install one dependency by writing the command `sudo apt-get install libedit-dev` and then compile using `cc -std=c99 -Wall lispy.c mpc.c -ledit -lm -o lispy`. You can now execute the compiled file to start the interpreter!<br>
 **Enjoy using Lispy!** <br>
 
 # Credits
