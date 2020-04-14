@@ -39,7 +39,7 @@ print "Hello World" ;;; this line is not going to be evaluated
 (print "Hello World") ;;; this one is gonna print "Hello World" in the terminal
 ```
 
-## Lispy basics
+# Lispy basics
 There are many unusual functionalities in Lispy, people familiar with Lisp or any of its dialects won't have any problem understanding the language, to anyone else it will look a bit foreign, but I will try to make it as clear as possible for anyone.
 ### Lisp Values
 There are only 6 value types you will generally interact with, **numbers**, **strings**, **errors**, **functions**, **S-expressions** and **Q-expressions**.
@@ -135,14 +135,14 @@ Error: Function 'head' passed incorrect number of arguments. Got 4, Expected 1.
 lispy> head {+ 1 2 3}
 {+}
 ``` 
-## Installation
+# Installation
 This software supports all platforms that have a C compiler, the only dependecy you need is the editline library, on Mac it comes with Command Line Tools, on Linux you can install it `with sudo apt-get install libedit-dev` while on Fedora you can use the command `su -c "yum install libedit-dev*"`.<br>
 Taken care of that you can compile lispy.c with this command: `cc -std=c99 -Wall lispy.c mpc.c -ledit -lm -o lispy`.
 #### Using cs50 ide, step by step 
 Clone the repository in a folder in your ide using the command `git clone https://github.com/Federico-abss/Lispy.git`, <br> after this you need to install one dependency by writing the command `sudo apt-get install libedit-dev` and then compile using `cc -std=c99 -Wall lispy.c mpc.c -ledit -lm -o lispy`. You can now execute the compiled file!<br>
 **Enjoy using Lispy!** <br>
 
-## Credits
+# Credits
 Cannot express my gratitude enough to Mr Daniel Holden for his incredible work on the "Build Your Own Lisp" book and MPC library, 
 he is the person that made this project possible.  
 
