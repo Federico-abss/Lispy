@@ -106,7 +106,7 @@ lispy> addition
 (\ {x y} {+ x y})
 ``` 
 As you can see above writing the symbol associated to a function will show if the function is builtin, or if it's a lambda, its formulation. 
-The standard library is a collection of custom functions written in Lispy that gets automatically loaded when you run the Lispy interface, you can find its documentation as well as the explanation on how to write custom functions [here](https://github.com/Federico-abss/Lispy/tree/master/std-library).
+The standard library is a collection of custom functions written in Lispy that gets automatically loaded when you run the Lispy interface, you can find its documentation [here](https://github.com/Federico-abss/Lispy/tree/master/std-library).
 #### S-expressions
 S-expressions are lines of code marked as "to be evaluated" from the interpreter, in the interface every piece of code is an sexpr by default, but if you are working with an external file you will need to wrap every expression in parenthesis to make them sexprs.
 Nesting sexprs is also importanto to comunicate the proper order of evalution for your code, remember that the interpreter starts always from the most internal sexprs.
@@ -155,8 +155,16 @@ lispy> + x 5
 ``` 
 You can create a local environment for your variables using the `let` function, but you also automatically create a local scope every time you use a custom function, this allows the interpreter to not pollute the global scope every time it evaluates a function.
 ### Symbols 
-We already spoke at length about symbols in lispy, but I have never given a formal definition, the parser recognizes every letter on an international keyboard and the most popular symbols, you can use them in any combination to create a symbol.
-Before assigning a lvalue to it, any symbol is in an "unbound" state, after it gets assigned it will act as a variable by holding the lvalue.
+We already spoke at length about symbols in lispy, but I have never given a formal definition, the parser recognizes every letter on an international keyboard and the most popular characters, you can use them in any combination to create a symbol.
+```
+lispy> x
+Error: Unbound Symbol 'x'
+lispy> = {x} 10
+()
+lispy> x
+10
+```
+Before assigning a lvalue to it, any symbol is in an "unbound" state, after it gets assigned it will act as a variable by holding the lvalue saved in the global environment. Look at the [environments](https://github.com/Federico-abss/Lispy#environments) section for reference on how to create a variable.
 ```
 lispy> x
 Error: Unbound Symbol 'x'
@@ -165,7 +173,8 @@ lispy> = {x} 10
 lispy> x
 10
 ``` 
-When you create a variable this is way it is saved inside the global environment, you can find it using `env` at the end of the list of functions. Pay attention when creating a variable, if you choose a symbol already in use you are going to override whatever lvalue was previously stored in it.
+When you create a variable this is way it is saved inside the global environment, you can find it using `env` at the end of the list of functions. Pay attention when creating a variable, if you choose a symbol already in use you are going to override whatever lvalue was previously stored in it. <br>
+Note that in Lispy functions, especially some builtin ones, are used in the definition of the custom standard library function, overriding something like `head` is gonna break the majority of the standard library.
 ```
 lispy> head
 <builtin>
@@ -190,10 +199,11 @@ lispy> x
 ``` 
 
 # Installation
-This software supports all platforms that have a C compiler, the only dependecy you need is the editline library, on Mac it comes with Command Line Tools, on Linux you can install it `with sudo apt-get install libedit-dev` while on Fedora you can use the command `su -c "yum install libedit-dev*"`.<br>
+This software supports all platforms but requires a C compiler, the only other dependecy you need is the editline library, on Mac it comes with Command Line Tools, on Linux you can install it `with sudo apt-get install libedit-dev` while on Fedora you can use the command `su -c "yum install libedit-dev*"`.<br>
 Taken care of that you can compile the interpreter file with this command: `cc -std=c99 -Wall lispy.c mpc.c -ledit -lm -o lispy`.
 #### Using cs50 ide, step by step 
-Clone the repository in a folder in your ide using the command `git clone https://github.com/Federico-abss/Lispy.git`, <br> after this you need to install one dependency by writing the command `sudo apt-get install libedit-dev` and then compile using `cc -std=c99 -Wall lispy.c mpc.c -ledit -lm -o lispy`. You can now execute the compiled file to start the interpreter!<br>
+Clone the repository in a folder in your ide using the command `git clone https://github.com/Federico-abss/Lispy.git` on your terminal, then write the command `sudo apt-get install libedit-dev`  and confirm the operation when asked, finally just move inside the folder and compile using `cc -std=c99 -Wall lispy.c mpc.c -ledit -lm -o lispy`. <br>
+You can now execute the compiled file to start the interpreter interface!<br>
 **Enjoy using Lispy!** <br>
 
 # Credits
