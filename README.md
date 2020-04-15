@@ -41,7 +41,7 @@ print "Hello World" ;;; this line is not going to be evaluated
 
 # Lispy basics
 There are many unusual functionalities in Lispy, people familiar with Lisp or any of its dialects won't have any problem understanding the language, to anyone else it will look a bit foreign, but I will try to make it as clear as possible for anyone.
-That being said this section is barely scraping the surface of what Lispy cand do, I strongly suggest you to read the documentation about [bultin functions](link) after completing this section.
+That being said this section is barely scraping the surface of what Lispy cand do, I strongly suggest you to read the documentation about [bultin functions](https://github.com/Federico-abss/Lispy/tree/master/Builtins-Functions) after completing this section.
 ### Lisp Values
 There are 7 value types or lvalues you will generally interact with, [**numbers**](https://github.com/Federico-abss/Lispy#numbers), [**strings**](https://github.com/Federico-abss/Lispy#strings), [**errors**](https://github.com/Federico-abss/Lispy#errors), [**functions**](https://github.com/Federico-abss/Lispy#errors), [**S-expressions**](https://github.com/Federico-abss/Lispy#S-expressions), [**Q-expressions**](https://github.com/Federico-abss/Lispy#Q-expressions) and [**environments**](https://github.com/Federico-abss/Lispy#environments).
 #### Numbers
@@ -95,7 +95,7 @@ lispy> (\ {x y} {* 2 (+ x y)}) 3 4
 14
 ``` 
 There are two different types of functions in Lispy, builtin and custom functions, builtins are functions written in C that perform an operation in Lispy, while customs are lambda functions bound to a symbol.
-Refer [here](link) for documentation on builtin functions
+Refer [here](https://github.com/Federico-abss/Lispy/tree/master/Builtins-Functions) for documentation on builtin functions.
 ```
 lispy> + 3 4
 7
