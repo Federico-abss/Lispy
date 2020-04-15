@@ -1,0 +1,10 @@
+;;; to read an external file you can either execute the lispy interpreter with the relative path to the file:
+;;; ./lispy examples/hello_world.lspy
+;;; or use the load function inside the prompt writing the file inside quotation marks
+;;; load "examples/hello_world.lspy"
+
+(print "Hello World!")
+
+(print (join "Hello" " to the " "world!"))
+
+(fun {addition x y} {+ x y})
