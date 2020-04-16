@@ -137,14 +137,14 @@ lispy> head {+ 1 2 3}
 {+}
 ``` 
 #### Environments
-Until now I have referred several times to symbols being bound to a function or other lvalues, but what does it mean in concrete? You see there is an environment which is basically a global scope that contains every symbol necessary for working with Lispy. <br>
+Until now I have referred several times to symbols being bound to a function or other lvalues, but what does it mean in concrete? You see there is an environment, which is basically a global scope, that contains every symbol bound to a lvalue and stores them for use. <br>
 The first thing the Lispy interpreter does when executed is creating a global environment and loading every builtin function and its symbols in it, you can see them by using the function `env`.
 ```
 lispy> env
 {def = env \ fun exit load error print list head tail eval join cons len init index pack unpack 
 > < >= <= == != if and or not + - * / % max min ^}
 ``` 
-Environments don't only contain functions, you can associate any lvalue to a symbol and save them for future use like a variable, just remember the environment is deleted every time you interrupt the execution of the interpreter. To create a variable in the global scope use the `=` followed by a symbol in curly brackets and the lvalue you want to bind.
+Environments don't only contain functions, you can associate any lvalue to a symbol and save them for future use like a variable, just remember the environment is deleted every time you interrupt the execution of the interpreter. To create a variable in the global scope use the `get` builtin followed by a symbol in curly brackets and the lvalue you want to bind. 
 ```
 lispy> = {x} 10
 ()
@@ -153,6 +153,7 @@ lispy> print x
 ()
 lispy> + x 5
 15
+;;; if you call env again you will find your variable at the end of the list
 ``` 
 You can create a local environment for your variables using the `let` function, but you also automatically create a local scope every time you use a custom function, this allows the interpreter to not pollute the global scope every time it evaluates a function.
 ### Symbols 
