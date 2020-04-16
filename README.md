@@ -1,7 +1,7 @@
 # Lispy
 Lispy is an interpreted, homoiconic, functional programming language inspired from the 1958 programming language Lisp. <br>
 The interpreter is written in C using the MPC library for parsing operations, and it currently can be used as 
-an Interactive Prompt to evaluate expressions in real time or to evaluate external lisp files. <br>
+an Interactive Prompt to evaluate expressions in real time or to evaluate external files written in Lispy. <br>
 
 ## Working with Lispy
 By executing the interpreter file you will be presented with this interface in the command line:
@@ -41,7 +41,7 @@ print "Hello World" ;;; this line is not going to be evaluated
 
 # Lispy basics
 There are many unusual functionalities in Lispy, people familiar with Lisp or any of its dialects won't have any problem understanding the language, to anyone else it will look a bit foreign, but I will try to make it as clear as possible for anyone.
-That being said this section is barely scraping the surface of what Lispy cand do, I strongly suggest you to read the documentation about [bultin functions](https://github.com/Federico-abss/Lispy/tree/master/Builtins-Functions) after completing this section.
+That being said this section is barely scraping the surface of what Lispy cand do, I strongly suggest you to read the documentation about [**builtin functions**](https://github.com/Federico-abss/Lispy/tree/master/Builtins-Functions) and the [**standard library**](https://github.com/Federico-abss/Lispy/tree/master/std-library) after completing this section.
 ### Lisp Values
 There are 7 value types or lvalues you will generally interact with, [**numbers**](https://github.com/Federico-abss/Lispy#numbers), [**strings**](https://github.com/Federico-abss/Lispy#strings), [**errors**](https://github.com/Federico-abss/Lispy#errors), [**functions**](https://github.com/Federico-abss/Lispy#errors), [**S-expressions**](https://github.com/Federico-abss/Lispy#S-expressions), [**Q-expressions**](https://github.com/Federico-abss/Lispy#Q-expressions) and [**environments**](https://github.com/Federico-abss/Lispy#environments).
 #### Numbers
