@@ -23,8 +23,8 @@ lispy> print "hello world"
 You probably noticed the weird way in which the + operator is only present before the numbers and not in between them, this is called <b>Polish Notation</b> and allows some of Lispy's more powerful and versatile features. <br>
 More examples of polish notation, `1 + 2 + 6`	is	`+ 1 2 6`, again `6 + (2 * 9)`	is	`+ 6 (* 2 9)` <br> and `(10 * 2) / (4 + 2)`	is	`/ (* 10 2) (+ 4 2)`.
 
-### Writing external files
-It's possible to load external files written in Lispy by calling the load function inside the interpreter interface or by executing it with the files to be evaluated as extra arguments.
+### Evaluating external files
+It's possible to load external files written in Lispy by calling the load function inside the interpreter interface or by executing the interpreter followed by the relative path of the files that you want to be evaluated.
 ```
 lispy>  load "hello_world.lspy"
 "Hello World!"
