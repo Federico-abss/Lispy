@@ -30,3 +30,15 @@ lispy> multiplePrint 5 "string"
 "string" () 
 ()
 ```
+Here is other two examples of popular algorithms, Fibonacci and the factorial of a number, written recursively inside the stdlibrary
+```
+lispy> fib 10
+55
+lispy> fib
+(\ {n} {select {(== n 0) 0} {(== n 1) 1} {otherwise (+ (fib (- n 1)) (fib (- n 2)))}})
+
+lispy> fact 5
+120
+lispy> fact
+(\ {n} {if (== n 0) {1} {* n (fact (- n 1))}})
+```
