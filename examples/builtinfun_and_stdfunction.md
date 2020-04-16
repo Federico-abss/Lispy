@@ -1,8 +1,7 @@
 An example of the simplicity of using custom functions compared to writing your own builtins in C. <br>
-builtin `fun` and stdlibrary `function` do exactly the same thing behind the scenes, allowing you to write custom functions using Lispy. <br> 
-I wrote them even if they do the same task to show the difference between working in C and Lispy. <br>
+Builtin `fun` and stdlibrary `function` do exactly the same thing behind the scenes, allowing you to write custom functions using Lispy, but I wrote the functionality twice to highlight the difference in approach between them. <br>
 
-This snippet of code shows how builtin fun is written using C:
+This snippet of code shows how builtin `fun` is written using C:
 
 ```
 /* create custom named functions using lambda functions*/
