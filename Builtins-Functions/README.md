@@ -153,6 +153,52 @@ lispy> index 0 {1 2 3}
 lispy> index 3 {1 2 3}
 Error: index out of range, the list has length 3
 ```
+### Conditional functions
+In Lisp there are no boolean values built in the language, conditional functions return `1` when they evaluate an expression to be true and `0` otherwise. You can use true and false in your expressions but it's just sintactic sugar!
+```
+lispy> true
+1
+lispy> false
+0
+```
+**`>`**, **`>=`**, **`<`** and **`<=`** all accept two numerical values as arguments and evaluate one against the other.
+```
+;;; evaluate if 10 is bigger than 5
+lispy> > 10 5
+1  ;;; true
+
+;;; evaluate if 1 is bigger or equal to 5
+lispy> >= 1 5
+0  ;;; false
+
+;;; evaluate if 1 is smaller than -5
+lispy> < 1 -5
+0
+
+;;; evaluate if -5 is smaller or equal to -5
+lispy> <= -5 -5
+1
+```
+**`==`** and **`!=`** evaluate if two lvals are equal or different, work on every lval type.
+```
+;;; evaluate two strings
+lispy> == "some" "thing"
+0
+
+;;; two lvalues of different types are always different
+lispy> != {12} 12
+1
+
+lispy> == 100 (* 10 10)
+1
+```
+**`if`** takes 3 arguments, the first a 0 or a 1, then two qexprs, if the first argument is 1 then the first qexpr gets evaluated, otherwise the latter.
+```
+lispy> if 1 {* 5 5} {- 5 5}
+25
+lispy> if (== 10 10) {print "true"} {print "false"}
+true
+```
 ### Arithmetic functions
 **`+`**, **`-`**, **`*`** and **`/`** are addition, subtraction multiplication and division, they all accept one or more arguments and 
 they evaluate them one by one.
