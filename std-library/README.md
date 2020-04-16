@@ -1,5 +1,32 @@
 ## Lispy Standard Library
-I already discussed in detail about [functions](https://github.com/Federico-abss/Lispy#functions) and [builtins](https://github.com/Federico-abss/Lispy/tree/master/Builtins-Functions) in Lispy, and the ways builtins are superior to custom functions
+I already discussed in detail about [functions](https://github.com/Federico-abss/Lispy#functions) and [builtins](https://github.com/Federico-abss/Lispy/tree/master/Builtins-Functions) in Lispy, and the ways builtins are superior to custom functions, but the functions in the stdlibrary have many advantages themselves, that make them a great way to expand the functionalities of the language and create powerful programs. <br>
+To begin with, custom functions are quite simple, writing a builtin instead requires a lot of work as [this example](https://github.com/Federico-abss/Lispy/blob/master/examples/builtinfun_and_stdfunction.md) showcases, furthermore they are self documenting since when you call them without arguments the interpreter will show their definition.
+```
+lispy> fst
+(\ {l} {eval (head l)})
+;;; fst takes a single argument and applies head and eval on it
+```
+I will provide examples of some other functions here, but in the [stdlibrary file](https://github.com/Federico-abss/Lispy/blob/master/std-library/std_library.lspy) you can find every function prefaced with a short explanation of their use.
 
 ### Recursion in Lispy
-the [Church-Turing thesis](https://en.wikipedia.org/wiki/Church%E2%80%93Turing_thesis)
+Let me address the elephant in the room, I didn't show any for or while loops yet, how do you write an iterative function in Lispy? <br>
+The short answer is that you don't. The bad news is that Lispy doesn't support iterative functions, only recursive ones. 
+The good one is that the [Church-Turing thesis](https://en.wikipedia.org/wiki/Church%E2%80%93Turing_thesis) proved already that you can write every iterative program in a recursive fashion and viceversa. <br>
+Let's take a very common iteration example, printing the same message multiple times, and write it recursively.
+```
+;;; this function takes a number n and another lvalue s, and prints s n times to the terminal
+(fun {multiplePrint n s} {
+  select
+    { (== n 1) (print s)}
+    { otherwise (print s (multiplePrint (- n 1) s))}
+}) ;;; you see that the function calls itself in its definition
+```
+```
+lispy> multiplePrint 5 "string"
+"string" 
+"string" () 
+"string" () 
+"string" () 
+"string" () 
+()
+```
