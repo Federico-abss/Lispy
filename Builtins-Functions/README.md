@@ -51,6 +51,7 @@ lispy> fst
 ;;; error message refers to head because fst is from stdlibrary and head is used in its definition
 ```
 ## Builtin functions
+### General use functions
 Let's start by visualizing all the builtins in the interpreter interface by using **`env`**, a function that allows us to visualize every symbol bound to the current environment, keep in mind that an env is comparable to a scope in other languages.
 ```
 ;;; let's use env in the global environment
@@ -99,3 +100,12 @@ lispy> doublesum
 ```
 Functions that can define functions. That is certainly something we could never do in C, and a showcase of the versatility of homoiconic
 code. <br>
+**`exit`** interrupts the execution of the program by closing the interpreter.
+**`load`** allows us to execute external lispy files and visualize their outputs in the interpreter.
+```
+;;; call load followed by the relative address of the lspy file to wrapped in quotation marks
+lispy> load "lispy_programs/hello_world.lspy"
+"Hello World!"
+()
+#### Quexpr and Sexpr functions
+```
