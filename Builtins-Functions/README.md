@@ -3,7 +3,7 @@ I briefly spoke about functions in the [intro section](https://github.com/Federi
 detail on builtin functions and what happens when you call one in Lispy. <br>
 In the introduction I also described Lispy as an **homoiconic** language, homoiconicity (code as data) is when a program can access its 
 own functions and procedures while running, and programmatically alter itself on the fly.
-This is possible in Lispy because functions are considered data typed like numbers and strings, and can be modified by other functions 
+This is possible in Lispy because functions are normal data types just like numbers and strings, and can be modified by other functions 
 or stored in lists.
 ```
 ;;; call a function (code)
@@ -29,9 +29,7 @@ This is the way in which the [standard library](https://github.com/Federico-abss
 builtins to create new functionalities for the language, and we'll se more example of homoiconicity when working with builtin `fun`.
 ### What is a builtin and errors
 How do bultins actually work under the hood? In reality they are nothing more than a function written in C, that the interpreter calls
-when it sees the symbol associated to it. That's how I inserted basic functionalities into the language like arithmetic operations and
-list manipulations, but it doesn't stop here, from these very simple builtins you can write complex functions like the ones in the 
-stdlibrary and expand the functionalities of the language without writing a single line of C. <br>
+when evaluating the symbol associated to it. That's how I inserted basic functionalities into the language like arithmetic operations and list manipulation, but it doesn't stop here, from very simple builtin operations you can write complex functions like the ones in the stdlibrary and expand the functionalities of the language without writing a single line of C. <br>
 You can recognise a builtin by calling it without arguments in the interpreter.
 ```
 lispy> head
@@ -60,7 +58,7 @@ lispy> fst
 ```
 ## Builtin functions
 ### General use functions
-Let's start by visualizing all the builtins in the interpreter interface by using **`env`**, a function that allows us to visualize every symbol bound to the current environment, keep in mind that an env is comparable to a scope in other languages.
+Let's start by visualizing every builtin in the interpreter interface by using **`env`**, a function that displays every symbol bound to the current environment, keep in mind that an env is comparable to a scope in other languages.
 ```
 ;;; let's use env in the global environment
 lispy> env
@@ -68,11 +66,11 @@ lispy> env
 > < >= <= == != if and or not + - * / % max min ^}
 ;;; if you use env in in your interface is going to show the stdlibrary functions as well
 ```
-I will keep addressing the main functions in order starting with **`def`** and **`=`**, which are both used to create new variables,
-the first one in the global env while the other in the local env.
+I will keep addressing the main functions in order, starting with **`def`** and **`=`**, which are both used to create new variables,
+the first one always operates in the global env while the other in the local env.
 ```
 ;;; remember that in the interface we are working in the global env by default
-;;; def and = accept 2 arguments, first the symbol in a list and then the lval you want to associate to it
+;;; def and = accept 2 arguments, first the symbol inside a list and then the lval you want to associate to it
 lispy> def {x} 10
 ()
 lispy> = {y} 5
@@ -96,7 +94,7 @@ lispy> doublesum 3 4
 14
 ```
 You can probably agree that the syntax for creating even simple reusable lambdas is very complex and hard to remember, that's where
-we use builtin **`fun`** to create custom functions with a more user friendly sintax. Just call `fun` followed by a qexpr containing
+we use builtin **`fun`** to create custom functions with a more user friendly appearance. Just call `fun` followed by a qexpr containing
 the name of the function and its arguments, then another qexpr containing the body of the function.
 ```
 lispy> fun {doublesum x y} {* 2 (+ x y)}
@@ -111,10 +109,11 @@ code. <br>
 **`exit`** interrupts the execution of the program by closing the interpreter.
 **`load`** allows us to execute external lispy files and visualize their outputs in the interpreter.
 ```
-;;; call load followed by the relative address of the lspy file to wrapped in quotation marks
-lispy> load "lispy_programs/hello_world.lspy"
+;;; call load followed by the relative address of the lspy file wrapped in quotation marks
+lispy> load "programs/hello_world.lspy"
 "Hello World!"
 ()
+;;; in this example the folder programs is in the same folder as the interpreter
 ```
 ### Quexpr and Sexpr functions
 Most of these functions work also on strings, builtins benefits from the possibility of "overloading" a function to deal with different types of data, while custom functions are generally limited to one. <br>
@@ -155,7 +154,7 @@ lispy> index 3 {1 2 3}
 Error: index out of range, the list has length 3
 ```
 ### Conditional functions
-In Lisp there are no boolean values built in the language, conditional functions return `1` when they evaluate an expression to be true and `0` otherwise. You can use true and false in your expressions but it's just sintactic sugar!
+In Lisp there are no boolean values built in the language, conditional functions return `1` when they evaluate an expression to be true and `0` otherwise. You can use true and false in your expressions, but it's just syntactic sugar!
 ```
 lispy> true
 1
