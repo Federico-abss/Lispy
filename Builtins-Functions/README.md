@@ -117,6 +117,7 @@ lispy> load "lispy_programs/hello_world.lspy"
 ()
 ```
 ### Quexpr and Sexpr functions
+Most of these functions work also on strings, builtins benefits from the possibility of "overloading" a function to deal with different types of data, while custom functions are generally limited to one. <br>
 **`list`** transforms a sexpr into a quexpr, blocking its evaluation, **`eval`** does the opposite operation by evaluating the data 
 inside a list.
 ```
