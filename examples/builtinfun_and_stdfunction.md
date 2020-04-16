@@ -1,6 +1,6 @@
-An example of the simplicity of using custom functions compared to writing your own builtins in C.
-builtin "fun" and stdlibrary "function" do exactly the same thing behind the scenes, allowing you to write custom functions using Lispy. 
-I wrote them even if they do the same task to show the difference between working in C and Lispy.
+An example of the simplicity of using custom functions compared to writing your own builtins in C. <br>
+builtin `fun` and stdlibrary `function` do exactly the same thing behind the scenes, allowing you to write custom functions using Lispy. <br> 
+I wrote them even if they do the same task to show the difference between working in C and Lispy. <br>
 
 This snippet of code shows how builtin fun is written using C:
 
@@ -30,7 +30,7 @@ lval* builtin_fun(lenv* e, lval* a) {
 
 It amounts to 20 lines of code, 9 functions calls and a ton of pointers. Took me about 10 hours of work.
 
-Here instead is function as written in the stdlibrary:
+Here instead is `function` as written in the stdlibrary:
 
 ```
 ; Function Definitions
