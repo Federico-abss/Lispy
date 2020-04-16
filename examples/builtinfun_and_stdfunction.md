@@ -4,7 +4,7 @@ Builtin `fun` and stdlibrary `function` do exactly the same thing behind the sce
 This snippet of code shows how builtin `fun` is written using C:
 
 ```
-/* create custom named functions using lambda functions*/
+/* create custom named functions using lambda functions */
 lval* builtin_fun(lenv* e, lval* a) {
     LASSERT_NUM("fun", a, 2);
     LASSERT_TYPE("fun", a, 0, LVAL_QEXPR);
