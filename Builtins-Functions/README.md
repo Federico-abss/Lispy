@@ -107,5 +107,43 @@ code. <br>
 lispy> load "lispy_programs/hello_world.lspy"
 "Hello World!"
 ()
-#### Quexpr and Sexpr functions
 ```
+### Quexpr and Sexpr functions
+**`list`** transforms a sexpr into a quexpr, blocking its evaluation, **`eval`** does the opposite operation by evaluating the data 
+inside a list.
+```
+;;; list accepts a single sexpr as argument while eval a single qexpr
+lispy> list + 5 5
+{<builtin> 5 5}
+lispy> eval {+ 5 5}
+10
+```
+**`head`** and **`tail`** both work on a list and do opposite operations, head takes the first element and tail every element after the first. 
+```
+;;; list accepts a single sexpr as argument while eval a single qexpr
+lispy> list + 5 5
+{<builtin> 5 5}
+lispy> eval {+ 5 5}
+10
+
+;;; they also work on strings!
+lispy> head "string"
+"s"
+```
+**`join`** fuses 2 or more qexprs into a single list, works also on string.
+```
+lispy> join {1 2 3} {4 5}
+{1 2 3 4 5}
+lispy> join "hello " "to " "the " "world" 
+"hello to the world"
+```
+**`len`** returns the number of lvals in a list or the characters in a string. <br>
+**`index`** returns a new list containing the element at index n of a list l, n starts from zero and goes to (- 1 (len l)).
+```
+lispy> index 0 {1 2 3}
+{1}
+lispy> index 3 {1 2 3}
+Error: index out of range, the list has length 3
+```
+### Arithmetic functions
++ - * / % max min ^
