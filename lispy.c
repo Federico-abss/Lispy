@@ -24,10 +24,13 @@ char* readline(char* prompt) {
 /* Fake add_history function */
 void add_history(char* unused) {}
 
-/* Otherwise include the editline headers */
-#else
-#include <editline/readline.h>
-#include <editline/history.h>
+/* Otherwise include the editline or readline headers */
+#elif defined(USE_EDITLINE) || !defined(USE_READLINE) && (defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__bsdi__) || defined(__DragonFly__))
+# include <editline/readline.h>
+# include <editline/history.h>
+#elif defined(USE_READLINE) || defined(__linux__)
+# include <readline/readline.h>
+# include <readline/history.h>
 #endif
 
 /* function to execute power operations */
