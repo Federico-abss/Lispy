@@ -4,6 +4,7 @@ I wrote them even if they do the same task to show the difference between workin
 
 This snippet of code shows how builtin fun is written using C:
 
+```
 /* create custom named functions using lambda functions*/
 lval* builtin_fun(lenv* e, lval* a) {
     LASSERT_NUM("fun", a, 2);
@@ -25,12 +26,15 @@ lval* builtin_fun(lenv* e, lval* a) {
     lval_del(name); 
     return lval_sexpr();
 }
+```
 
 It amounts to 20 lines of code, 9 functions calls and a ton of pointers. Took me about 10 hours of work.
 
 Here instead is function as written in the stdlibrary:
 
+```
 ; Function Definitions
 (def {function} (\ {f b} {
   def (head f) (\ (tail f) b)
 }))
+```
