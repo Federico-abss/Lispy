@@ -32,6 +32,14 @@ How do bultins actually work under the hood? In reality they are nothing more th
 when it sees the symbol associated to it. That's how I inserted basic functionalities into the language like arithmetic operations and
 list manipulations, but it doesn't stop here, from these very simple builtins you can write complex functions like the ones in the 
 stdlibrary and expand the functionalities of the language without writing a single line of C. <br>
+You can recognise a builtin by calling it without arguments in the interpreter.
+```
+lispy> head
+<builtin>
+;;; custom and stdlibrary functions return their definition instead
+lispy> pack
+(\ {f & xs} {f xs})
+```
 Builtins have the advantage of having a rigid error checking and reporting structure that is not possible to easily implement in Lispy,
 that's how builtin functions have customized error messages, and most common ones are **incorrect number of arguments**, 
 **incorrect type of arguments** and **expected non empty list**.
@@ -146,4 +154,31 @@ lispy> index 3 {1 2 3}
 Error: index out of range, the list has length 3
 ```
 ### Arithmetic functions
-+ - * / % max min ^
+**`+`**, **`-`**, **`*`** and **`/`** are addition, subtraction multiplication and division, they all accept one or more arguments and 
+they evaluate them one by one.
+```
+lispy> + 10 10 10 10
+40
+
+;;; first argument minus following arguments
+lispy> - 10 5 5 5
+-5
+;;; if only one argument it negates it
+lispy> - 10
+-10
+
+lispy> * 2 2 2 2
+16
+
+lispy> / 20 2 5 
+2
+```
+**`%`** executes the modulus operation, **`max`** and **`min`** return respectively the biggest and smallest arguments provided.
+```
+lispy> % 5 3
+2
+lispy> max 10 15 19
+19
+lispy> min 10 1 -8
+-8
+```
