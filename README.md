@@ -41,7 +41,7 @@ print "Hello World" ;;; this line is not going to be evaluated
 
 # Lispy basics
 There are many unusual functionalities in Lispy, people familiar with Lisp or any of its dialects won't have any problem understanding the language, to anyone else it will look a bit foreign, but I will try to make it as clear as possible for anyone. <br>
-That being said this section is barely scraping the surface of what Lispy cand do, I strongly suggest you to read the documentation about [**builtin functions**](https://github.com/Federico-abss/Lispy/tree/master/Builtins-Functions) and the [**standard library**](https://github.com/Federico-abss/Lispy/tree/master/std-library) after completing this section.
+That being said this section is barely scraping the surface of what Lispy cand do, I strongly suggest you to read the documentation about [**builtin functions**](https://github.com/Federico-abss/Lispy/tree/master/Builtins-Functions) and the [**standard library**](https://github.com/Federico-abss/Lispy/tree/master/std-library) after.
 ### Lisp Values
 There are 7 value types or lvalues you will generally interact with, [**numbers**](https://github.com/Federico-abss/Lispy#numbers), [**strings**](https://github.com/Federico-abss/Lispy#strings), [**errors**](https://github.com/Federico-abss/Lispy#errors), [**functions**](https://github.com/Federico-abss/Lispy#errors), [**S-expressions**](https://github.com/Federico-abss/Lispy#S-expressions), [**Q-expressions**](https://github.com/Federico-abss/Lispy#Q-expressions) and [**environments**](https://github.com/Federico-abss/Lispy#environments).
 #### Numbers
@@ -72,13 +72,13 @@ lispy> + 1 "2"
 Error: Cannot operate on non-number!
 lispy> + 1 2
 3
-lispy> error "costum error"
-Error: costum error
+lispy> error "custom error"
+Error: custom error
 ``` 
 #### Functions 
 Here is where we start working with some of Lispy's more interesting and powerful features, firstly a function is a type of value bound to a symbol, that when called with the right arguments is gonna perform some actions or otherwise return an error. <br>
-To call a function just write its symbol followed by the intended arguments, just note that every function support different values as arguments and while some can accepts any number of arguments other can only accept a defined amount. <br>
-There is no distinction between what other languages consider operators like `+` and functions like `print`, lispy interprets them both as symbols, and if they are bound to any function value the function gets called.
+To call a function just write its symbol followed by the arguments, just note that every function support different lvalues as arguments and different numbers of them. <br>
+There is no distinction between what other languages consider operators like `+` and functions like `print`, lispy interprets them both as symbols, and since they are bound to a function value the function gets called when the symbol gets evaluated.
 ```
 lispy> - 1 2  ;;; "-" is the symbol for the subtraction function
 -1
@@ -94,8 +94,8 @@ lispy> * 2 (+ 3 4)
 lispy> (\ {x y} {* 2 (+ x y)}) 3 4
 14
 ``` 
-There are two different types of functions in Lispy, builtin and custom functions, builtins are functions written in C that perform an operation in Lispy, while customs are lambda functions bound to a symbol.
-Refer [here](https://github.com/Federico-abss/Lispy/tree/master/Builtins-Functions) for documentation on builtin functions.
+There are two different types of functions in Lispy, builtin and custom functions, builtins are functions written in C that perform an operation in Lispy, while customs are lambda functions bound to a symbol and stored in the environment.
+Refer [here](https://github.com/Federico-abss/Lispy/tree/master/Builtins-Functions) for the documentation on builtin functions.
 ```
 lispy> + 3 4
 7
@@ -106,7 +106,7 @@ lispy> +
 lispy> addition
 (\ {x y} {+ x y})
 ``` 
-As you can see above writing the symbol associated to a function will show if the function is builtin, or if it's a lambda, its formulation. 
+As you can see above writing the symbol associated to a function will show if the function is builtin, or if it's custom, its formulation. 
 The standard library is a collection of custom functions written in Lispy that gets automatically loaded when you run the Lispy interface, you can find its documentation [here](https://github.com/Federico-abss/Lispy/tree/master/std-library).
 #### S-expressions
 S-expressions are lines of code marked as "to be evaluated" from the interpreter, in the interface every piece of code is an sexpr by default, but if you are working with an external file you will need to wrap every expression in parenthesis to make them sexprs.
@@ -157,25 +157,17 @@ lispy> + x 5
 ``` 
 You can create a local environment for your variables using the `let` function, but you also automatically create a local scope every time you use a custom function, this allows the interpreter to not pollute the global scope every time it evaluates a function.
 ### Symbols 
-We already spoke at length about symbols in lispy, but I have never given a formal definition, the parser recognizes every letter on an international keyboard and the most popular characters, you can use them in any combination to create a symbol.
+We already spoke at length about symbols in lispy, but I have never given a formal definition, the parser recognizes every letter and number on an international keyboard and some of the most common use characters so you can use them in any combination, except starting with a number, to create a symbol. <br>
+Before assigning a lvalue to it, any symbol is in an "unbound" state, after it gets assigned to an lvalue it will act as a variable by allowing to recall it in a later moment. Look at the [environments](https://github.com/Federico-abss/Lispy#environments) section for reference on how to create a variable.
 ```
 lispy> x
 Error: Unbound Symbol 'x'
-lispy> = {x} 10
-()
-lispy> x
-10
-```
-Before assigning a lvalue to it, any symbol is in an "unbound" state, after it gets assigned it will act as a variable by holding the lvalue saved in the global environment. Look at the [environments](https://github.com/Federico-abss/Lispy#environments) section for reference on how to create a variable.
-```
-lispy> x
-Error: Unbound Symbol 'x'
-lispy> = {x} 10
+lispy> def {x} 10
 ()
 lispy> x
 10
 ``` 
-When you create a variable this is way it is saved inside the global environment, you can find it using `env` at the end of the list of functions. Pay attention when creating a variable, if you choose a symbol already in use you are going to override whatever lvalue was previously stored in it. <br>
+When you create a variable this is way it is saved inside the global environment, you can see it using `env` at the end of the list of symbols. Pay attention when creating a variable, if you choose a symbol already in use you are going to override whatever lvalue was previously stored in it. <br>
 Note that in Lispy functions, especially some builtin ones, are used in the definition of the custom standard library function, overriding something like `head` is gonna break the majority of the standard library.
 ```
 lispy> head
@@ -186,26 +178,31 @@ lispy> head
 5
 ``` 
 Expanding on this, variables in lispy are immutable, there is no way of modifying them, and even when you assign a new lvalue to the same symbol to update a variable, in the background the interpreter is just destroying the variable and creating a new one associated to the same symbol.
-The same happens with symbols bound to qexprs, even though quexprs are often used like lists they are more similar to sets when bound to a symbol, as they cannot be modified after being stored in a variable.
+The same happens with symbols bound to qexprs, even though quexprs are effectively lists they behave like sets when bound to a symbol, as they cannot be modified after being stored in a variable.
 ```
 lispy> = {x} {1 2 3}
 ()
 lispy> head x
 {1}
+
 lispy> x  
-{1 2 3}   ;;; "head" didn't actually remove the first value as expected
+{1 2 3} 
+;;; "head" didn't actually remove the first value as expected
+
 lispy> = {x} (tail x)
-()   ;;; we need to rebind the symbol and use a different function to perform the intended operation
+()   
+;;; we need to rebind the symbol and use a different function to perform the intended operation
+
 lispy> x
 {2 3}
 ``` 
 
 # Installation
-This software supports all platforms but requires a C compiler, the only other dependecy you need is the editline library, on Mac it comes with Command Line Tools, on Linux you can install it `with sudo apt-get install libedit-dev` while on Fedora you can use the command `su -c "yum install libedit-dev*"`.<br>
+This software supports all platforms but requires a C compiler, the only other dependency you need is the editline library, on Mac it comes with Command Line Tools, on Linux you can install it `with sudo apt-get install libedit-dev` while on Fedora you can use the command `su -c "yum install libedit-dev*"`.<br>
 Taken care of that you can compile the interpreter file with this command: `cc -std=c99 -Wall lispy.c mpc.c -ledit -lm -o lispy`.
 #### Using cs50 ide, step by step 
 Clone the repository in a folder in your ide using the command `git clone https://github.com/Federico-abss/Lispy.git` on your terminal, then write the command `sudo apt-get install libedit-dev`  and confirm the operation when asked, finally just move inside the folder and compile using `cc -std=c99 -Wall lispy.c mpc.c -ledit -lm -o lispy`. <br>
-You can now execute the compiled file to start the interpreter interface!<br>
+You can now execute the compiled file writing `./lispy`, to start the interpreter interface.<br>
 **Enjoy using Lispy!** <br>
 
 # Credits
