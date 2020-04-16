@@ -42,7 +42,7 @@ Error: Function 'tail' passed incorrect number of arguments. Got 2, Expected 1.
 lispy> head (+ 1 3)
 Error: Function 'head' expected a String or a Q-expression
 
-lispy> fst {}                                                                                                                           
+lispy> fst {}                                                                                                  
 Error: Function 'head' passed {} for argument 0.
 ;;; expected non empty list but received empty qexpr
 
