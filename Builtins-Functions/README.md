@@ -51,3 +51,51 @@ lispy> fst
 ;;; error message refers to head because fst is from stdlibrary and head is used in its definition
 ```
 ## Builtin functions
+Let's start by visualizing all the builtins in the interpreter interface by using **`env`**, a function that allows us to visualize every symbol bound to the current environment, keep in mind that an env is comparable to a scope in other languages.
+```
+;;; let's use env in the global environment
+lispy> env
+{def = env \ fun exit load error print list head tail eval join cons len init index pack unpack 
+> < >= <= == != if and or not + - * / % max min ^}
+;;; if you use env in in your interface is going to show the stdlibrary functions as well
+```
+I will keep addressing the main functions in order starting with **`def`** and **`=`**, which are both used to create new variables,
+the first one in the global env while the other in the local env.
+```
+;;; remember that in the interface we are working in the global env by default
+;;; def and = accept 2 arguments, first the symbol in a list and then the lval you want to associate to it
+lispy> def {x} 10
+()
+lispy> = {y} 5
+()
+lispy> + x y
+15
+```
+**`\`** is used to create lambda functions, custom single use expression to execute operations in your code. `\` automatically creates a new scope every time it is used so the main env doesn't get polluted with the lambda function arguments.
+```
+lispy> * 2 (+ 3 4)
+14
+;;; to create a lambda write \ followed by 2 lists, one containing the arguments and one the body of the function
+lispy> (\ {x y} {* 2 (+ x y)}) 3 4
+14
+```
+You can also bind the lambda function to a symbol and make it reusable, using `def`.
+```
+lispy> def {doublesum} (\ {x g} {* 2 (+ x g)})
+()
+lispy> doublesum 3 4
+14
+```
+You can probably agree that the syntax for creating even simple reusable lambdas is very complex and hard to remember, that's where
+we use builtin **`fun`** to create custom functions with a more user friendly sintax. Just call `fun` followed by a qexpr containing
+the name of the function and its arguments, then another qexpr containing the body of the function.
+```
+lispy> fun {doublesum x y} {* 2 (+ x y)}
+()
+lispy> doublesum 3 4
+14
+lispy> doublesum
+(\ {x y} {* 2 (+ x y)})
+```
+Functions that can define functions. That is certainly something we could never do in C, and a showcase of the versatility of homoiconic
+code. <br>
