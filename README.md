@@ -51,7 +51,7 @@ lispy> / 10 3
 3
 lispy> / 10 3.0 
 3.333333  
-lispy> 1.0   ;;; decimals are always displayed with 6 numbers after the decimal point
+lispy> 1.0   ;;; decimals are always displayed with 6 characters after the decimal point
 1.000000
 ``` 
 #### Strings
