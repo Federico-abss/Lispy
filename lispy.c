@@ -1458,6 +1458,13 @@ int main(int argc, char** argv){
             /* Output our prompt and get input*/
             input = readline("lispy> ");
 
+            /* Check NULL input. This is the case of EOF (^D) */
+            if (input == NULL) {
+              putchar('\n');
+              input = (char *)malloc(sizeof("exit"));
+              memcpy(input, "exit", sizeof("exit"));
+            }
+
             /* Add input to history */
             add_history(input);
 
