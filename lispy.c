@@ -70,6 +70,13 @@ long power(long x, long y) {
   LASSERT(args, args->cell[index]->count != 0, \
     "Function '%s' passed {} for argument %i.", func, index);
 
+/* Input command for interpreter */
+char* input;
+
+/* Cleanup function */
+void cleanup() {
+  free(input);
+}
 
 /* forward declaration for the compiler */
 struct lval;
@@ -1439,13 +1446,17 @@ int main(int argc, char** argv){
     lenv_add_builtins(e);
     lval* standard = lval_add(lval_sexpr(), lval_str("std-library/std_library.lspy"));
     lval* std = builtin_load(e, standard);
+    if (atexit(cleanup)) {
+      fputs("Can't register cleanup function\n", stderr);
+      return -1;
+    }
 
     /* if only one argument is provided start a never ending loop */
     if (argc == 1) {
         while (1) {
 
             /* Output our prompt and get input*/
-            char* input = readline("lispy> ");
+            input = readline("lispy> ");
 
             /* Add input to history */
             add_history(input);
