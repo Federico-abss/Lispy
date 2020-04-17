@@ -42,3 +42,33 @@ lispy> fact 5
 lispy> fact
 (\ {n} {if (== n 0) {1} {* n (fact (- n 1))}})
 ```
+### Map, Filter and Reduce
+In every language, being able to manipulate lists is a powerful tool, and this is especially true in Lispy since it relies so much on qexprs! <br>
+**`map`** takes two arguments, a function and a list, and applies the function to every value inside the list and then returns it containing the modified values.
+```
+lispy> map - {5 6 7 8 2 22 44}
+{-5 -6 -7 -8 -2 -22 -44}
+
+lispy> map (\ {x} {+ x 10}) {5 2 11}
+{15 12 21}
+
+lispy> print {"hello" "world"}
+{"hello" "world"}
+()
+lispy> map print {"hello" "world"}
+"hello"
+"world"
+{() ()}
+```
+**`filter`** is a function which, takes in some functional condition and a list, and only includes items of the list which match that condition.
+```
+lispy> filter (\ {x} {> x 2}) {5 2 11 -7 8 1}
+{5 11 8}
+```
+There is no real `reduce` in the stdlibrary, but you can use other instruments to obtain a similar result, the **`unpack`** function for example takes in a function `f` and a list `l`, and extracts every value from `l` and evaluates them using `f`.
+```
+lispy> unpack + {10 5 3 2}
+20
+lispy> unpack join {"Thanks " "Reddit " "for " "the support!"}
+"Thanks Reddit for the support!"
+```
