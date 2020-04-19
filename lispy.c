@@ -2,19 +2,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// sudo apt-get install libedit-dev
-// cc -std=c99 -Wall lispy.c mpc.c -ledit -lm -o lispy
+/* Use this command to compile:
+cc -std=c99 -Wall lispy.c mpc.c -ledit -lm -o lispy */
 
-/* If we are compiling on Windows compile these functions */
+/* general use buffer */
+#define BUFFER (512)
+
+/* If we are on Windows these functions are compiled */
 #ifdef _WIN32
 #include <string.h>
 
-static char buffer[2048];
+#define WIN_BUFFER (2048)
+static char buffer[WIN_BUFFER];
 
 /* Fake readline function */
 char* readline(char* prompt) {
   fputs(prompt, stdout);
-  fgets(buffer, 2048, stdin);
+  fgets(buffer, WIN_BUFFER, stdin);
   char* cpy = malloc(strlen(buffer)+1);
   strcpy(cpy, buffer);
   cpy[strlen(cpy)-1] = '\0';
@@ -148,10 +152,10 @@ lval* lval_err(char* fmt, ...) {
     va_start(va, fmt);
 
     /* Allocate 512 bytes of space */
-    v->err = malloc(512);
+    v->err = malloc(BUFFER);
 
     /* printf the error string with a maximum of 511 characters */
-    vsnprintf(v->err, 511, fmt, va);
+    vsnprintf(v->err, BUFFER-1, fmt, va);
 
     /* Reallocate to number of bytes actually used */
     v->err = realloc(v->err, strlen(v->err)+1);
@@ -306,7 +310,7 @@ lval* lval_add(lval* v, lval* x) {
 lval* lval_join(lval* x, lval* y) {
     /* For strings */
     if ((x->type == LVAL_STR) & (y->type == LVAL_STR)) {
-        char str[1024];
+        char str[BUFFER];
         strcpy(str, x->str);
         strcat(str, y->str);
 
