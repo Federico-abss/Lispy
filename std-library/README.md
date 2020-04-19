@@ -30,7 +30,7 @@ lispy> multiplePrint 5 "string"
 "string" () 
 ()
 ```
-Here is other two examples of popular algorithms, Fibonacci and the factorial of a number, written recursively inside the stdlibrary.
+Here is other two examples of popular algorithms, Fibonacci and factorial of a number, written recursively inside the stdlibrary.
 ```
 lispy> fib 10
 55
