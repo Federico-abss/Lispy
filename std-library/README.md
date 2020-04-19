@@ -43,7 +43,7 @@ lispy> fact
 (\ {n} {if (== n 0) {1} {* n (fact (- n 1))}})
 ```
 ### Map, Filter and Reduce
-In every language, being able to manipulate lists is a powerful tool, and this is especially true in Lispy since it relies so much on qexprs! <br>
+In every language, being able to manipulate lists is a powerful tool, and this is especially true in Lispy since it relies so much on qexprs! These functions also help overcome the lack of iterative loops since they are able to substitute typical `for` operation. <br>
 **`map`** takes two arguments, a function and a list, and applies the function to every value inside the list and then returns it containing the modified values.
 ```
 lispy> map - {5 6 7 8 2 22 44}
