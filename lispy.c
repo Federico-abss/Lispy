@@ -1441,7 +1441,7 @@ int main(int argc, char** argv){
     Number, Symbol, String, Comment, Sexpr, Qexpr, Expr, Lispy);
 
     /* Print Version and Exit Information */
-    puts("Lispy Version 1.0.0.1");
+    puts("Lispy Version 1.0.0.2");
     puts("Hi, I am Federico and this is my version of Lisp, made especially for you with love");
     puts("Press Ctrl+c or write exit to Exit\n");
 
