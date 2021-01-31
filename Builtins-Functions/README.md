@@ -128,15 +128,16 @@ lispy> eval {+ 5 5}
 ```
 **`head`** and **`tail`** both work on a list and do opposite operations, head takes the first element and tail every element after the first. 
 ```
-;;; list accepts a single sexpr as argument while eval a single qexpr
-lispy> list + 5 5
-{<builtin> 5 5}
-lispy> eval {+ 5 5}
-10
+lispy> head {1 2 3}
+{1}
+lispy> tail {1 2 3}
+{2 3}
 
 ;;; they also work on strings!
 lispy> head "string"
 "s"
+lispy> tail "string"
+"tring"
 ```
 **`join`** fuses 2 or more qexprs into a single list, works also on string.
 ```
